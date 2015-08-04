@@ -2,20 +2,26 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
  
-const char* ssid = "ssid";
-const char* password = "password";
+const char* ssid = "your-SSID-here";
+const char* password = "wifi-password-here";
 
 ESP8266WebServer server(80);
 
 const int led = 4;
 
+String htmlRootPage = "<html><head><title>Simple ESP8266 Web Server</title></head><body><header><h1>ESP8266</h1><h2>IoT made easy!</h2></header><p><a href=\"/on?pin=4\">Turn on LED on pin 4</a></p></body></html>";
+
+String htmlPinOnPage = "<html><head><title>Simple ESP8266 Web Server</title></head><body><header><h1>ESP8266</h1><h2>IoT made easy!</h2></header><p><a href=\"/off?pin=4\">Turn off LED on pin 4</a></p></body></html>";
+
+String htmlPinOffPage = "<html><head><title>Simple ESP8266 Web Server</title></head><body><header><h1>ESP8266</h1><h2>IoT made easy!</h2></header><p><a href=\"/on?pin=4\">Turn on LED on pin 4</a></p></body></html>";
+
 void handleRoot() {
-  server.send(200, "text/plain", "hello from esp8266!");
+  server.send(200, "text/html", htmlRootPage);
 }
 
 void handleOn() {
   //digitalWrite(led, 1);
-  server.send(200, "text/plain", "LED on.");
+  server.send(200, "text/html", htmlPinOnPage);
   
   String httpArgumentName = "";
   String httpArgumentValue = "";
@@ -32,7 +38,7 @@ void handleOn() {
 
 void handleOff() {
   //digitalWrite(led, 0);
-  server.send(200, "text/plain", "LED off.");
+  server.send(200, "text/html", htmlPinOffPage);
 
   String httpArgumentName = "";
   String httpArgumentValue = "";
